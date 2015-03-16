@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>message</name>
+          <description></description>
+          <defaultValue>automatically triggered backup</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>cd /var/lib/jenkins/
+tar cvf   /var/lib/jenkins/jenkins-config.tar   config.xml hudson.model.UpdateCenter.xml hudson.plugins.git.GitTool.xml jenkins.security.QueueItemAuthenticatorConfiguration.xml nodeMonitors.xml jobs/*/config.xml users/*/config.xml
+git add jenkins-config.tar
+
+got_nothing_to_commit=`git status | grep &quot;nothing added to commit&quot; | wc -l`
+
+if [ &quot;$got_nothing_to_commit&quot; = &quot;1&quot; ] ; then 
+  echo no changes to commit 
+  exit 0
+fi
+
+
+git commit  -m &quot;commit performed for following reason: $message&quot; . 
+
+git push -u origin master
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
