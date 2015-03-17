@@ -24,7 +24,7 @@
   <builders>
     <hudson.tasks.Shell>
       <command>cd /var/lib/jenkins/
-tar cvf   /var/lib/jenkins/jenkins-config.tar   config.xml hudson.model.UpdateCenter.xml hudson.plugins.git.GitTool.xml jenkins.security.QueueItemAuthenticatorConfiguration.xml nodeMonitors.xml jobs/*/config.xml users/*/config.xml
+tar cvf   /var/lib/jenkins/jenkins-config.tar   config.xml hudson.model.UpdateCenter.xml hudson.plugins.git.GitTool.xml jenkins.security.QueueItemAuthenticatorConfiguration.xml nodeMonitors.xml jobs/*/config.xml users/*/config.xml plugins/*.*pi
 git add jenkins-config.tar
 
 got_nothing_to_commit=`git status | grep &quot;nothing added to commit&quot; | wc -l`
